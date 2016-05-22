@@ -28,13 +28,6 @@ public class HBaseBackend {
 	public HBaseBackend() {
 
 		config = HBaseConfiguration.create();
-		// // Add any necessary configuration files (hbase-site.xml,
-		// core-site.xml)
-		// getConfig().addResource(new Path(System.getenv("HBASE_CONF_DIR"),
-		// "hbase-site.xml"));
-		// getConfig().addResource(new Path(System.getenv("HADOOP_CONF_DIR"),
-		// "core-site.xml"));
-
 		getConfig().addResource(new Path("/Users/nicolasfontenele/tools/apps/hbase/conf", "hbase-site.xml"));
 		getConfig().addResource(new Path("/Users/nicolasfontenele/tools/apps/hadoop/etc/hadoop", "core-site.xml"));
 
@@ -93,7 +86,6 @@ public class HBaseBackend {
 			createOrOverwrite(admin, table);
 			System.out.println(" Done.");
 		} catch (IOException ex) {
-			// TODO : forget it for now
 			ex.printStackTrace();
 			throw new IOException(ex);
 		}
