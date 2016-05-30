@@ -21,6 +21,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 import com.ts.exception.BackendException;
 import com.ts.model.Timeseries;
+import com.ts.model.TimeseriesHBase;
 
 /**
  * 
@@ -115,7 +116,7 @@ public class TSHBaseBackend extends HBaseBackend implements TimeseriesBackend {
 			e.printStackTrace();
 		}
 
-		Timeseries ts = new Timeseries();
+		TimeseriesHBase ts = new TimeseriesHBase();
 		ts.setObjectId(String.valueOf(identifier));
 
 		Map<byte[], byte[]> timeByValue = result.getFamilyMap(Bytes.toBytes(CF_TIMESERIES));
@@ -138,9 +139,10 @@ public class TSHBaseBackend extends HBaseBackend implements TimeseriesBackend {
 		return ts;
 	}
 
+	@Override
 	public Timeseries getTimeSeriesByUserId(String id) {
 		
-		Timeseries ts = new Timeseries();
+		TimeseriesHBase ts = new TimeseriesHBase();
 
 		Get getInterval = new Get(Bytes.toBytes(id));
 		getInterval.addFamily(Bytes.toBytes(CF_TIMESERIES));
@@ -172,7 +174,7 @@ public class TSHBaseBackend extends HBaseBackend implements TimeseriesBackend {
 			Iterator<Result> iterator = scanner.iterator();
 			while (iterator.hasNext()) {
 				Result next = iterator.next();
-				Timeseries ts = new Timeseries();
+				Timeseries ts = new TimeseriesHBase();
 				String objectId = Bytes.toString((next.getRow()));
 
 				Map<byte[], byte[]> tsFamily = next.getFamilyMap(Bytes.toBytes(CF_TIMESERIES));
@@ -182,8 +184,8 @@ public class TSHBaseBackend extends HBaseBackend implements TimeseriesBackend {
 				// Map<byte[],byte[]> tsProperty =
 				// next.getFamilyMap(Bytes.toBytes(CF_PROPERTIES));
 
-				ts.setObjectId(objectId);
-				ts.setTimeseries(tsMap);
+				((TimeseriesHBase) ts).setObjectId(objectId);
+				((TimeseriesHBase) ts).setTimeseries(tsMap);
 				// ts.setProperties(properties);
 
 				tsList.add(ts);
@@ -208,9 +210,10 @@ public class TSHBaseBackend extends HBaseBackend implements TimeseriesBackend {
 	 * @param end
 	 * @return
 	 */
+	@Override
 	public Timeseries getFromTimeInterval(String id, long init, long end) {
 
-		Timeseries ts = new Timeseries();
+		TimeseriesHBase ts = new TimeseriesHBase();
 		Map<Long, String> tsValues = new HashMap<Long, String>();
 
 		Get getInterval = new Get(Bytes.toBytes(id));

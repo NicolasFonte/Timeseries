@@ -10,7 +10,7 @@ import java.util.Map;
 import com.ts.exception.BackendException;
 import com.ts.hbase.dao.TimeseriesBackend;
 import com.ts.hbase.dao.TSHBaseBackend;
-import com.ts.model.Timeseries;
+import com.ts.model.TimeseriesHBase;
 
 public class HBaseWISDMDumpUtil {
 
@@ -33,7 +33,7 @@ public class HBaseWISDMDumpUtil {
 		long startHBaseDump = System.currentTimeMillis();
 		for (String id : objectTs.keySet()) {
 			System.out.println("importing object: " + id);
-			Timeseries ts = new Timeseries();
+			TimeseriesHBase ts = new TimeseriesHBase();
 			ts.setObjectId(id);
 			ts.setTimeseries(objectTs.get(id));
 

@@ -7,14 +7,13 @@ import java.nio.charset.Charset;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class OpenTSDBClientAPISamples {
 
 	public static void main(String args[]) {
 
-		// printStats();
-		// printAggregators();
+		printStats();
+		printAggregators();
 		querySample();
 	}
 
